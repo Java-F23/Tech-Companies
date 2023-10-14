@@ -32,4 +32,9 @@ public class Resource {
     public void setLink(String link) {
         this.link = link;
     }
+    public void printResource(){
+        System.out.println("Resource Name: " + this.getName());
+        System.out.println("Resource Description: " + this.getDescription());
+        System.out.println("Resource URL: " + this.getLink());
+    }
 }

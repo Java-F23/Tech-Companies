@@ -3,22 +3,24 @@ import java.util.Scanner;
 
 public class AdminBoard {
     private Scanner scanner;
+    private User user;
 
-    public AdminBoard() {
+    public AdminBoard(User user) {
         scanner = Main.scanner;
+        this.user = user;
         showOptions();
     }
 
     public void showOptions() {
-        System.out.println("Welcome");
+        System.out.println("Welcome, " + user.getUsername() + " !");
         System.out.println("Please select an option:");
-        System.out.println("1. Add Company");
-        System.out.println("2. Update Company Details");
-        System.out.println("3. Manage Job Applications");
-        System.out.println("4. Manage a Project in a Company");
-        System.out.println("5. Generate Company Report");
-        System.out.println("6. Delete Company");
-        System.out.println("7. Log Out");
+        System.out.println("1) Add Company");
+        System.out.println("2) Update Company Details");
+        System.out.println("3) Manage Job Applications");
+        System.out.println("4) Manage a Project in a Company");
+        System.out.println("5) Generate Company Report");
+        System.out.println("6) Delete Company");
+        System.out.println("7) Log Out");
 
         int option = Main.Take_input(7);
         boolean Repeat = true;
@@ -44,7 +46,7 @@ public class AdminBoard {
                 Report();
                 break;
             }
-            case 6{
+            case 6:{
                 DeleteCompany();
                 break;
             }
@@ -603,7 +605,7 @@ public class AdminBoard {
         else{
             System.out.println("Project Completion Rate: " + ((done/(done+undone))*100) + "%");
         }
-        System.out.println("Press Enter to continue..");
+        System.out.println("Press any key then Enter to continue..");
         scanner.next();
     }
 

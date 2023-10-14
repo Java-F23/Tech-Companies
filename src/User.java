@@ -4,7 +4,7 @@ public class User {
     private static int users = 0;
     private String username;
     private String password;
-    private ArrayList<String> favoriteCompanies;
+    private ArrayList<Company> favoriteCompanies;
 
     private final Boolean admin;
 
@@ -37,15 +37,15 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<String> getFavoriteCompanies() {
+    public ArrayList<Company> getFavoriteCompanies() {
         return favoriteCompanies;
     }
 
-    public void addFavoriteCompany(String company) {
+    public void addFavoriteCompany(Company company) {
         this.favoriteCompanies.add(company);
     }
 
-    public void removeFavoriteCompany(String company) {
+    public void removeFavoriteCompany(Company company) {
         this.favoriteCompanies.remove(company);
     }
     public Boolean getAdmin() {
