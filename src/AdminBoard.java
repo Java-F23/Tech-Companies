@@ -445,7 +445,7 @@ public class AdminBoard {
             if (current_j.getApplicants().isEmpty()){
                 System.out.println("No applications yet to this listing");
             }
-            System.out.println("Select an application to manage or Enter " + (current_j.getApplicants().size()+1) + "to exit");
+            System.out.println("Select an application to manage or Enter " + (current_j.getApplicants().size()+1) + " to exit");
             int app_index = Main.Take_input(current_j.getApplicants().size() + 1);
             if(app_index == current_j.getApplicants().size() +1 ){
                 repeat = false;
