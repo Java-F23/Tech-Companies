@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -65,7 +66,7 @@ public class UserBoard {
     public void showCompany(Company c){
         boolean repeat = true;
         do {
-            c.printCompanyDetails();
+            c.printCompanyDetails(new JPanel());
             System.out.println("Select the operation you want:");
             System.out.println("1) Mark as your favourite");
             System.out.println("2) Remove from favourites");

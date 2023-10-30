@@ -1,4 +1,14 @@
 import java.util.ArrayList;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 public class Company {
     private String name;
@@ -198,66 +208,183 @@ public class Company {
         return result;
     }
 
-    public void printCompanyDetails(){
-        System.out.println(this.getName() + ": ");
-        System.out.println("\t Industry: " + this.getIndustry());
-        System.out.println("\t Location: " + this.getLocation());
-        System.out.println("\t Year of Founding: " + this.getFoundingYear());
-        System.out.println("\t Industry: " + this.getIndustry());
-        printProducts();
-        printServices();
-        printJobs();
-        System.out.println("\t Number of Employees: " + getEmployees().size());
-        printCurrentProjects();
-        printPastProjects();
-        printCourses();
-        printTutorials();
-        printDocumentations();
-        System.out.println("\t Revenue: " + getRevenue());
+    public void printCompanyDetails(JPanel panel) {
+        panel.removeAll();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5, 5, 5, 5);
+
+        // Company Name
+        JLabel nameLabel = new JLabel("Company Name: " + getName());
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        panel.add(nameLabel, constraints);
+
+        // Industry
+        JLabel industryLabel = new JLabel("Industry: " + getIndustry());
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        panel.add(industryLabel, constraints);
+
+        // Location
+        JLabel locationLabel = new JLabel("Location: " + getLocation());
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        panel.add(locationLabel, constraints);
+
+        // Year of Founding
+        JLabel foundingYearLabel = new JLabel("Year of Founding: " + getFoundingYear());
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        panel.add(foundingYearLabel, constraints);
+
+        // Products Button
+        JButton productsButton = new JButton("Products");
+        productsButton.addActionListener(e -> printProducts(panel));
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        panel.add(productsButton, constraints);
+
+        // Services Button
+        JButton servicesButton = new JButton("Services");
+        servicesButton.addActionListener(e -> printServices(panel));
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        panel.add(servicesButton, constraints);
+
+        // Jobs Button
+        JButton jobsButton = new JButton("Jobs");
+        jobsButton.addActionListener(e -> printJobs(panel));
+        constraints.gridx = 0;
+        constraints.gridy = 6;
+        panel.add(jobsButton, constraints);
+
+        // Number of Employees
+        JLabel employeesLabel = new JLabel("Number of Employees: " + getEmployees().size());
+        constraints.gridx = 0;
+        constraints.gridy = 7;
+        panel.add(employeesLabel, constraints);
+
+        // Current Projects Button
+        JButton currentProjectsButton = new JButton("Current Projects");
+        currentProjectsButton.addActionListener(e -> printCurrentProjects());
+        constraints.gridx = 0;
+        constraints.gridy = 8;
+        panel.add(currentProjectsButton, constraints);
+
+        // Past Projects Button
+        JButton pastProjectsButton = new JButton("Past Projects");
+        pastProjectsButton.addActionListener(e -> printPastProjects());
+        constraints.gridx = 0;
+        constraints.gridy = 9;
+        panel.add(pastProjectsButton, constraints);
+
+        // Courses Button
+        JButton coursesButton = new JButton("Courses");
+        coursesButton.addActionListener(e -> printCourses());
+        constraints.gridx = 0;
+        constraints.gridy = 10;
+        panel.add(coursesButton, constraints);
+
+        // Tutorials Button
+        JButton tutorialsButton = new JButton("Tutorials");
+        tutorialsButton.addActionListener(e -> printTutorials());
+        constraints.gridx = 0;
+        constraints.gridy = 11;
+        panel.add(tutorialsButton, constraints);
+
+        // Documentations Button
+        JButton documentationsButton = new JButton("Documentations");
+        documentationsButton.addActionListener(e -> printDocumentations());
+        constraints.gridx = 0;
+        constraints.gridy = 12;
+        panel.add(documentationsButton, constraints);
+
+        // Revenue
+        JLabel revenueLabel = new JLabel("Revenue: " + getRevenue());
+        constraints.gridx = 0;
+        constraints.gridy = 13;
+        panel.add(revenueLabel, constraints);
+
+        panel.revalidate();
+        panel.repaint();
     }
 
-    public void printServices(){
+    public void printServices(JPanel panel) {
+        panel.removeAll();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
         ArrayList<String> temp = this.getServices();
-        int i = 1;
-        if(temp.isEmpty()){
-            System.out.println("\t Services: None");
-        }
-        else{
-            System.out.println("\t Services: ");
-            for (String S : temp){
-                System.out.println("\t\t" + i + ") " + S);
-                i++;
+        if (temp.isEmpty()) {
+            JLabel label = new JLabel("Services: None");
+            panel.add(label);
+        } else {
+            JLabel label = new JLabel("Services:");
+            panel.add(label);
+
+            for (String S : temp) {
+                JLabel serviceLabel = new JLabel(S);
+                panel.add(serviceLabel);
             }
         }
+
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> printCompanyDetails(panel));
+        panel.add(returnButton);
+
+        panel.revalidate();
+        panel.repaint();
     }
 
-    public void printProducts(){
-        ArrayList<String> temp = this.getProducts();
-        int i = 1;
-        if(temp.isEmpty()){
-            System.out.println("\t Products: None");
-        }
-        else{
-            System.out.println("\t Products: ");
-            for (String S : temp){
-                System.out.println("\t\t" + i + ") " + S);
-                i++;
+    public void printProducts(JPanel panel){
+        panel.removeAll();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        ArrayList<String> products = this.getProducts();
+        if (products.isEmpty()) {
+            JLabel label = new JLabel("Products: None");
+            panel.add(label);
+        } else {
+            JLabel label = new JLabel("Products:");
+            panel.add(label);
+
+            for (int i = 0; i < products.size(); i++) {
+                String product = products.get(i);
+                JLabel productLabel = new JLabel((i + 1) + ") " + product);
+                panel.add(productLabel);
             }
         }
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> printCompanyDetails(panel));
+        panel.add(returnButton);
+
+        panel.revalidate();
+        panel.repaint();
     }
-    public void printJobs(){
+    public void printJobs(JPanel panel){
         ArrayList<JobListing> temp = this.getJobs();
-        int i = 1;
-        if(temp.isEmpty()){
-            System.out.println("\t Jobs: None");
-        }
-        else{
-            System.out.println("\t Jobs: ");
-            for (JobListing J : temp){
-                System.out.println("\t\t" + i + ") " + J.getName());
-                i++;
+        panel.removeAll();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        if (temp.isEmpty()) {
+            JLabel label = new JLabel("Jobs: None");
+            panel.add(label);
+        } else {
+            JLabel titleLabel = new JLabel("Jobs:");
+            panel.add(titleLabel);
+
+            for (JobListing J : temp) {
+                JLabel jobLabel = new JLabel("\t" + J.getName());
+                panel.add(jobLabel);
             }
         }
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> printCompanyDetails(panel));
+        panel.add(returnButton);
+
+        panel.revalidate();
+        panel.repaint();
     }
      public void printEmployees(){
          ArrayList<Integer> temp = this.getEmployees();

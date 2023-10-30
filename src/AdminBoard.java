@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -100,7 +101,7 @@ public class AdminBoard {
         }
         boolean repeat = true;
         do {
-            current_c.printCompanyDetails();
+            current_c.printCompanyDetails(new JPanel());
             System.out.println("What do you want to modify: ");
             System.out.println("1) Change Name");
             System.out.println("2) Change Location");

@@ -71,4 +71,12 @@ public class Database {
     public void addUsers(User users) {
         Users.add(users);
     }
+    public User getUser(String username, String password) {
+        for (User user : Users) {
+            if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
+    }
 }

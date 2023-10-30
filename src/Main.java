@@ -12,7 +12,9 @@ public class Main {
         db.addUsers(user1);
         User user2 = new User("User2", "User2", false);
         db.addUsers(user2);
-        do {
+        User user = new User("John","123",false);
+        UserBoard_UI userBoard = new UserBoard_UI(user);
+        /*do {
             System.out.println("Select your authority type:");
             System.out.println("1) Admin");
             System.out.println("2) User 1");
@@ -28,7 +30,7 @@ public class Main {
             else if(number == 3){
                 new UserBoard(user2);
             }
-        }while (number !=4);
+        }while (number !=4);*/
         scanner.close();
     }
 
