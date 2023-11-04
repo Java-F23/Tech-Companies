@@ -2,6 +2,7 @@ import java.util.Scanner;
 public class Main {
     static Scanner scanner;
     static Database db;
+    static Welcome_Screen welcomeScreen;
     public static void main(String[] args) {
         int number;
         scanner = new Scanner(System.in);
@@ -12,8 +13,8 @@ public class Main {
         db.addUsers(user1);
         User user2 = new User("User2", "User2", false);
         db.addUsers(user2);
-        User user = new User("John","123",false);
-        UserBoard_UI userBoard = new UserBoard_UI(user);
+        welcomeScreen= new Welcome_Screen(db);
+        welcomeScreen.initiate();
         /*do {
             System.out.println("Select your authority type:");
             System.out.println("1) Admin");

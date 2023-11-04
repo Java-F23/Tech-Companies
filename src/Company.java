@@ -208,180 +208,196 @@ public class Company {
         return result;
     }
 
-    public void printCompanyDetails(JPanel panel) {
+    public void printCompanyDetailsUser(JPanel panel, User user, JButton returnbutton) {
         panel.removeAll();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.insets = new Insets(5, 5, 5, 5);
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(5,5,5,5);
 
         // Company Name
         JLabel nameLabel = new JLabel("Company Name: " + getName());
-        constraints.gridx = 0;
         constraints.gridy = 0;
         panel.add(nameLabel, constraints);
 
         // Industry
         JLabel industryLabel = new JLabel("Industry: " + getIndustry());
-        constraints.gridx = 0;
         constraints.gridy = 1;
         panel.add(industryLabel, constraints);
 
         // Location
         JLabel locationLabel = new JLabel("Location: " + getLocation());
-        constraints.gridx = 0;
         constraints.gridy = 2;
         panel.add(locationLabel, constraints);
 
         // Year of Founding
         JLabel foundingYearLabel = new JLabel("Year of Founding: " + getFoundingYear());
-        constraints.gridx = 0;
         constraints.gridy = 3;
         panel.add(foundingYearLabel, constraints);
 
         // Products Button
         JButton productsButton = new JButton("Products");
-        productsButton.addActionListener(e -> printProducts(panel));
-        constraints.gridx = 0;
+        productsButton.addActionListener(e -> printProductsUser(panel, user, returnbutton));
         constraints.gridy = 4;
         panel.add(productsButton, constraints);
 
         // Services Button
         JButton servicesButton = new JButton("Services");
-        servicesButton.addActionListener(e -> printServices(panel));
-        constraints.gridx = 0;
+        servicesButton.addActionListener(e -> printServicesUser(panel, user, returnbutton));
         constraints.gridy = 5;
         panel.add(servicesButton, constraints);
 
         // Jobs Button
         JButton jobsButton = new JButton("Jobs");
-        jobsButton.addActionListener(e -> printJobs(panel));
-        constraints.gridx = 0;
+        jobsButton.addActionListener(e -> printJobsUser(panel,user, returnbutton));
         constraints.gridy = 6;
         panel.add(jobsButton, constraints);
 
         // Number of Employees
         JLabel employeesLabel = new JLabel("Number of Employees: " + getEmployees().size());
-        constraints.gridx = 0;
         constraints.gridy = 7;
         panel.add(employeesLabel, constraints);
 
         // Current Projects Button
         JButton currentProjectsButton = new JButton("Current Projects");
-        currentProjectsButton.addActionListener(e -> printCurrentProjects());
-        constraints.gridx = 0;
+        currentProjectsButton.addActionListener(e -> printCurrentProjectsUser(panel,user, returnbutton));
         constraints.gridy = 8;
         panel.add(currentProjectsButton, constraints);
 
         // Past Projects Button
         JButton pastProjectsButton = new JButton("Past Projects");
-        pastProjectsButton.addActionListener(e -> printPastProjects());
-        constraints.gridx = 0;
+        pastProjectsButton.addActionListener(e -> printPastProjectsUser(panel,user, returnbutton));
         constraints.gridy = 9;
         panel.add(pastProjectsButton, constraints);
 
         // Courses Button
         JButton coursesButton = new JButton("Courses");
-        coursesButton.addActionListener(e -> printCourses());
-        constraints.gridx = 0;
+        coursesButton.addActionListener(e -> printCoursesUser(panel,user, returnbutton));
         constraints.gridy = 10;
         panel.add(coursesButton, constraints);
 
         // Tutorials Button
         JButton tutorialsButton = new JButton("Tutorials");
-        tutorialsButton.addActionListener(e -> printTutorials());
-        constraints.gridx = 0;
+        tutorialsButton.addActionListener(e -> printTutorialsUser(panel,user, returnbutton));
         constraints.gridy = 11;
         panel.add(tutorialsButton, constraints);
 
         // Documentations Button
         JButton documentationsButton = new JButton("Documentations");
-        documentationsButton.addActionListener(e -> printDocumentations());
-        constraints.gridx = 0;
+        documentationsButton.addActionListener(e -> printDocumentationsUser(panel,user, returnbutton));
         constraints.gridy = 12;
         panel.add(documentationsButton, constraints);
 
         // Revenue
         JLabel revenueLabel = new JLabel("Revenue: " + getRevenue());
-        constraints.gridx = 0;
         constraints.gridy = 13;
         panel.add(revenueLabel, constraints);
+        constraints.gridy = 14;
+        panel.add(returnbutton, constraints);
 
         panel.revalidate();
         panel.repaint();
     }
 
-    public void printServices(JPanel panel) {
+    public void printServicesUser(JPanel panel, User user, JButton returnbutton) {
         panel.removeAll();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(5,5,5,5);
+        constraints.gridy = 0;
 
         ArrayList<String> temp = this.getServices();
         if (temp.isEmpty()) {
             JLabel label = new JLabel("Services: None");
-            panel.add(label);
+            panel.add(label, constraints);
         } else {
             JLabel label = new JLabel("Services:");
-            panel.add(label);
+            panel.add(label,constraints);
 
             for (String S : temp) {
+                constraints.gridy++;
                 JLabel serviceLabel = new JLabel(S);
-                panel.add(serviceLabel);
+                panel.add(serviceLabel,constraints);
             }
         }
 
         JButton returnButton = new JButton("Return");
-        returnButton.addActionListener(e -> printCompanyDetails(panel));
-        panel.add(returnButton);
+        returnButton.addActionListener(e -> printCompanyDetailsUser(panel, user, returnbutton));
+        constraints.gridy++;
+        panel.add(returnButton, constraints);
 
         panel.revalidate();
         panel.repaint();
     }
 
-    public void printProducts(JPanel panel){
+    public void printProductsUser(JPanel panel, User user, JButton returnbutton){
         panel.removeAll();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(5,5,5,5);
+        constraints.gridy = 0;
 
         ArrayList<String> products = this.getProducts();
         if (products.isEmpty()) {
             JLabel label = new JLabel("Products: None");
-            panel.add(label);
+            panel.add(label, constraints);
         } else {
             JLabel label = new JLabel("Products:");
-            panel.add(label);
+            panel.add(label, constraints);
 
             for (int i = 0; i < products.size(); i++) {
                 String product = products.get(i);
                 JLabel productLabel = new JLabel((i + 1) + ") " + product);
-                panel.add(productLabel);
+                constraints.gridy++;
+                panel.add(productLabel, constraints);
             }
         }
         JButton returnButton = new JButton("Return");
-        returnButton.addActionListener(e -> printCompanyDetails(panel));
-        panel.add(returnButton);
+        returnButton.addActionListener(e -> printCompanyDetailsUser(panel, user, returnbutton));
+        constraints.gridy++;
+        panel.add(returnButton, constraints);
 
         panel.revalidate();
         panel.repaint();
     }
-    public void printJobs(JPanel panel){
+    public void printJobsUser(JPanel panel, User user, JButton returnbutton){
         ArrayList<JobListing> temp = this.getJobs();
         panel.removeAll();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(5,5,5,5);
+        constraints.gridy = 0;
 
         if (temp.isEmpty()) {
             JLabel label = new JLabel("Jobs: None");
-            panel.add(label);
+            panel.add(label, constraints);
         } else {
             JLabel titleLabel = new JLabel("Jobs:");
-            panel.add(titleLabel);
+            panel.add(titleLabel, constraints);
 
             for (JobListing J : temp) {
+                JPanel jobPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
                 JLabel jobLabel = new JLabel("\t" + J.getName());
-                panel.add(jobLabel);
+                jobPanel.add(jobLabel);
+
+                // Create a new Apply button for each job listing
+                JButton applyButton = new JButton("Apply");
+                applyButton.addActionListener(e -> {
+                    // Call the function for applying here
+                    J.addApplicant(user);
+                });
+                jobPanel.add(applyButton);
+                constraints.gridy++;
+                panel.add(jobPanel, constraints);
             }
         }
         JButton returnButton = new JButton("Return");
-        returnButton.addActionListener(e -> printCompanyDetails(panel));
-        panel.add(returnButton);
+        returnButton.addActionListener(e -> printCompanyDetailsUser(panel, user, returnbutton));
+        constraints.gridy++;
+        panel.add(returnButton, constraints);
 
         panel.revalidate();
         panel.repaint();
@@ -400,76 +416,161 @@ public class Company {
              }
          }
      }
-     public void printCurrentProjects(){
-         ArrayList<Project> temp = this.getCurrentProjects();
-         int i = 1;
-         if(temp.isEmpty()){
-             System.out.println("\t Projects: None");
-         }
-         else{
-             System.out.println("\t Projects: ");
-             for (Project P : temp){
-                 System.out.println("\t\t" + i + ") " + P.getName());
-                 i++;
-             }
-         }
-     }
-     public void printPastProjects(){
-         ArrayList<Project> temp = this.getPastProjects();
-         int i = 1;
-         if(temp.isEmpty()){
-             System.out.println("\t Past Projects: None");
-         }
-         else{
-             System.out.println("\t Past Projects: ");
-             for (Project P : temp){
-                 System.out.println("\t\t" + i + ") " + P.getName());
-                 i++;
-             }
-         }
-     }
+     public void printCurrentProjectsUser(JPanel panel, User user, JButton returnbutton){
+         panel.removeAll();
+         panel.setLayout(new GridBagLayout());
+         GridBagConstraints constraints = new GridBagConstraints();
+         constraints.anchor = GridBagConstraints.CENTER;
+         constraints.insets = new Insets(5,5,5,5);
+         constraints.gridy = 0;
 
-     public void printCourses(){
-         ArrayList<Resource> temp = this.getCourses();
-         int i = 1;
-         if(temp.isEmpty()){
-             System.out.println("\t Courses: None");
-         }
-         else{
-             System.out.println("\t Courses: ");
-             for (Resource R : temp){
-                 System.out.println("\t\t" + i + ") " + R.getName());
-                 i++;
+         ArrayList<Project> projects = this.getCurrentProjects();
+         if (projects.isEmpty()) {
+             JLabel label = new JLabel("Current Projects: None");
+             panel.add(label, constraints);
+         } else {
+             JLabel label = new JLabel("Current Projects:");
+             panel.add(label, constraints);
+
+             for (int i = 0; i < projects.size(); i++) {
+                 Project project = projects.get(i);
+                 JLabel productLabel = new JLabel((i + 1) + ") " + project.getID() + " | " + project.getName());
+                 constraints.gridy++;
+                 panel.add(productLabel, constraints);
              }
          }
+         JButton returnButton = new JButton("Return");
+         returnButton.addActionListener(e -> printCompanyDetailsUser(panel, user, returnbutton));
+         constraints.gridy++;
+         panel.add(returnButton, constraints);
+
+         panel.revalidate();
+         panel.repaint();
      }
-    public void printTutorials(){
-        ArrayList<Resource> temp = this.getTutorials();
-        int i = 1;
-        if(temp.isEmpty()){
-            System.out.println("\t Tutorials: None");
-        }
-        else{
-            System.out.println("\t Tutorials: ");
-            for (Resource R : temp){
-                System.out.println("\t\t" + i + ") " + R.getName());
-                i++;
+    public void printPastProjectsUser(JPanel panel, User user, JButton returnbutton){
+        panel.removeAll();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(5,5,5,5);
+        constraints.gridy = 0;
+
+        ArrayList<Project> projects = this.getPastProjects();
+        if (projects.isEmpty()) {
+            JLabel label = new JLabel("Past Projects: None");
+            panel.add(label, constraints);
+        } else {
+            JLabel label = new JLabel("Past Projects:");
+            panel.add(label, constraints);
+
+            for (int i = 0; i < projects.size(); i++) {
+                Project project = projects.get(i);
+                JLabel productLabel = new JLabel((i + 1) + ") " + project.getID() + " | " + project.getName());
+                constraints.gridy++;
+                panel.add(productLabel,constraints);
             }
         }
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> printCompanyDetailsUser(panel, user, returnbutton));
+        constraints.gridy++;
+        panel.add(returnButton, constraints);
+
+        panel.revalidate();
+        panel.repaint();
     }
-    public void printDocumentations(){
-        ArrayList<Resource> temp = this.getDocumentations();
-        int i = 1;
-        if(temp.isEmpty()){
-            System.out.println("\t Documentations: None");
-        }
-        else{
-            System.out.println("\t Documentations: ");
-            for (Resource R : temp){
-                System.out.println("\t\t" + i + ") " + R.getName());
-                i++;
+
+    public void printCoursesUser(JPanel panel, User user, JButton returnbutton){
+        panel.removeAll();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(5,5,5,5);
+        constraints.gridy = 0;
+
+        ArrayList<Resource> courses = this.getCourses();
+        if (courses.isEmpty()) {
+            JLabel label = new JLabel("Courses: None");
+            panel.add(label, constraints);
+        } else {
+            JLabel label = new JLabel("Courses:");
+            panel.add(label, constraints);
+
+            for (int i = 0; i < courses.size(); i++) {
+                Resource course = courses.get(i);
+                JLabel productLabel = new JLabel((i + 1) + ") " + course.getName() + " : " + course.getDescription() + "\n\\t Find it at: " + course.getLink());
+                constraints.gridy++;
+                panel.add(productLabel, constraints);
             }
         }
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> printCompanyDetailsUser(panel, user, returnbutton));
+        constraints.gridy++;
+        panel.add(returnButton, constraints);
+
+        panel.revalidate();
+        panel.repaint();
+    }
+    public void printTutorialsUser(JPanel panel, User user, JButton returnbutton){
+        panel.removeAll();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(5,5,5,5);
+        constraints.gridy = 0;
+
+        ArrayList<Resource> tutorials = this.getTutorials();
+        if (tutorials.isEmpty()) {
+            JLabel label = new JLabel("Tutorials: None");
+            panel.add(label, constraints);
+        } else {
+            JLabel label = new JLabel("Tutorials:");
+            panel.add(label, constraints);
+
+            for (int i = 0; i < tutorials.size(); i++) {
+                Resource tutorial = tutorials.get(i);
+                JLabel productLabel = new JLabel((i + 1) + ") " + tutorial.getName() + " : " + tutorial.getDescription() + "\n\\t Find it at: " + tutorial.getLink());
+                constraints.gridy++;
+                panel.add(productLabel, constraints);
+            }
+        }
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> printCompanyDetailsUser(panel, user, returnbutton));
+        constraints.gridy++;
+        panel.add(returnButton, constraints);
+
+        panel.revalidate();
+        panel.repaint();
+    }
+    public void printDocumentationsUser(JPanel panel, User user, JButton returnbutton){
+        panel.removeAll();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(5,5,5,5);
+        constraints.gridy = 0;
+
+        ArrayList<Resource> docs = this.getDocumentations();
+        if (docs.isEmpty()) {
+            JLabel label = new JLabel("Documentations: None");
+            panel.add(label, constraints);
+        } else {
+            JLabel label = new JLabel("Documentations:");
+            panel.add(label, constraints);
+
+            for (int i = 0; i < docs.size(); i++) {
+                Resource doc = docs.get(i);
+                JLabel productLabel = new JLabel((i + 1) + ") " + doc.getName() + " : " + doc.getDescription() + "\n\\t Find it at: " + doc.getLink());
+                constraints.gridy++;
+                panel.add(productLabel,constraints);
+            }
+        }
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> printCompanyDetailsUser(panel, user, returnbutton));
+        constraints.gridy++;
+        panel.add(returnButton,constraints);
+
+        panel.revalidate();
+        panel.repaint();
     }
 
     public void completeCurrentProject(int p_index){

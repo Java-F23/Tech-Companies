@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 public class Welcome_Screen {
     private Database db;
+    private JFrame frame;
     public Welcome_Screen(Database database){
         db = database;
-        // Create a new JFrame
-        JFrame frame = new JFrame("Welcome Screen");
+    }
+    public void initiate(){
+        frame = new JFrame("Welcome Screen");
 
         // Set the layout of the JFrame to GridBagLayout
         frame.setLayout(new GridBagLayout());
@@ -35,9 +37,9 @@ public class Welcome_Screen {
             public void actionPerformed(ActionEvent e) {
                 LoginScreen loginScreen = new LoginScreen(db);
                 loginScreen.setVisible(true);
-
                 // Hide welcome screen
                 frame.setVisible(false);
+                frame.dispose();
             }
         });
 

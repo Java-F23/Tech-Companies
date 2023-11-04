@@ -1,3 +1,4 @@
+/*
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -66,7 +67,7 @@ public class UserBoard {
     public void showCompany(Company c){
         boolean repeat = true;
         do {
-            c.printCompanyDetails(new JPanel());
+            c.printCompanyDetailsUser(new JPanel(), user);
             System.out.println("Select the operation you want:");
             System.out.println("1) Mark as your favourite");
             System.out.println("2) Remove from favourites");
@@ -98,7 +99,7 @@ public class UserBoard {
                     break;
                 }
                 case 3:{
-                    c.printJobs();
+                    c.printJobsUser(new JPanel(), user);
                     if(c.getJobs().isEmpty()){
                         System.out.println("No Job Listings yet, stay tuned for future listings");
                     }
@@ -192,4 +193,4 @@ public class UserBoard {
     public void showFavourites(){
         ShowList(user.getFavoriteCompanies());
     }
-}
+}*/

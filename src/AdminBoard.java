@@ -1,3 +1,4 @@
+/*
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -618,4 +619,4 @@ public class AdminBoard {
         Main.db.removeCompany(current_c_index);
         System.out.println("Company Removed Successfully");
     }
-}
+}*/

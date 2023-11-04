@@ -62,7 +62,13 @@ public class LoginScreen extends JFrame {
                 User user = database.getUser(username, password);
                 if (user != null) {
                     // User exists, login successful
-                    System.out.println("Login successful");
+                    if (user.getAdmin()){
+
+                    }
+                    else{
+                        UserBoard_UI userBoardUi = new UserBoard_UI(user);
+                    }
+                    dispose();
                 } else {
                     // User does not exist, login failed
                     ErrorMessage.show("Invalid username or password");
