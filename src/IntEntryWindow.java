@@ -23,6 +23,8 @@ public class IntEntryWindow extends EntryWindow {
         panel.add(textButton);
 
         add(panel);
+        this.pack();
+        this.setVisible(true);
 
         textButton.addActionListener(e -> {
             String text = textField.getText();

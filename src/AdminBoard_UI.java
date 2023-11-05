@@ -1,18 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class UserBoard_UI {
+public class AdminBoard_UI {
     private User user;
     private JFrame frame;
     private JPanel panel;
     private JPanel showAllCompaniesPanel;
     private JPanel companyDetailsPanel;
 
-    public UserBoard_UI(User user) {
+    public AdminBoard_UI(User user) {
         this.user = user;
-        frame = new JFrame("UserBoard");
+        frame = new JFrame("Admin Board");
         frame.setSize(500, 500);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +34,7 @@ public class UserBoard_UI {
         JButton filterCompaniesByNameButton = new JButton("Filter Companies by name");
         JButton filterCompaniesByIndustryButton = new JButton("Filter Companies by industry");
         JButton filterCompaniesByLocationButton = new JButton("Filter Companies by location");
-        JButton showFavouriteCompaniesButton = new JButton("Show Favourite Companies");
+        JButton addCompaniesButton = new JButton("Add a Company");
         JButton logOutButton = new JButton("Log Out");
 
         // Add action listeners to each button
@@ -41,7 +42,7 @@ public class UserBoard_UI {
         filterCompaniesByNameButton.addActionListener(e -> searchName());
         filterCompaniesByIndustryButton.addActionListener(e -> searchIndustry());
         filterCompaniesByLocationButton.addActionListener(e -> searchLocation());
-        showFavouriteCompaniesButton.addActionListener(e -> showCompanies(user.getFavoriteCompanies()));
+        addCompaniesButton.addActionListener(e -> addCompany());
         logOutButton.addActionListener(e -> logOut());
 
         // Add buttons to panel
@@ -53,7 +54,7 @@ public class UserBoard_UI {
         constraints.gridy++;
         panel.add(filterCompaniesByLocationButton, constraints);
         constraints.gridy++;
-        panel.add(showFavouriteCompaniesButton,constraints);
+        panel.add(addCompaniesButton,constraints);
         constraints.gridy++;
         panel.add(logOutButton,constraints);
 
@@ -74,20 +75,9 @@ public class UserBoard_UI {
         // Create a label for each company and add it to the panel
         // Create a button for each company and add it to the panel
         for (Company company :companies) {
-            JPanel companyPanel = new JPanel();
-            companyPanel.setLayout(new GridLayout());
             JButton companyButton = new JButton(company.getName());
             companyButton.addActionListener(e -> showCompanyDetails(company, companies));
-            companyPanel.add(companyButton);
-            JButton favButton = new JButton(company.getName());
-            // Set the button text based on whether it's a favorite
-            updateFavoriteButtonText(company, favButton, user);
-            // Add an ActionListener to toggle the favorite status and show details
-            favButton.addActionListener(e -> {
-                toggleFavorite(company, favButton, user);
-            });
-            companyPanel.add(favButton);
-            showAllCompaniesPanel.add(companyPanel, constraints);
+            showAllCompaniesPanel.add(companyButton, constraints);
             constraints.gridy++;
         }
 
@@ -128,7 +118,7 @@ public class UserBoard_UI {
         // Create a return button to go back to the showAllCompaniesPanel
         JButton returnButton = new JButton("Return");
         returnButton.addActionListener(e -> showCompanies(companies));
-        company.printCompanyDetailsUser(companyDetailsPanel, user, returnButton);
+        company.printCompanyDetailsAdmin(companyDetailsPanel, returnButton);
 
         // Clear the panel and add the companyDetailsPanel
         panel.removeAll();
@@ -193,22 +183,58 @@ public class UserBoard_UI {
         TextEntryWindow name = new TextEntryWindow("Name of the Location", textEnteredListener);
     }
 
-    private void updateFavoriteButtonText(Company company, JButton button, User user) {
-        if (user.getFavoriteCompanies().contains(company)) {
-            button.setText("Unstar"); // If it's a favorite, set text to "Unstar"
-        } else {
-            button.setText("Star"); // If it's not a favorite, set text to "Star"
-        }
-    }
+    private void addCompany(){
+        panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
+        ActionListener nameEnteredListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String Name = e.getActionCommand();
+                if (Name == null) {
+                    showOptions();
+                } else {
+                    ActionListener locEnteredListener = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            String Location = e.getActionCommand();
+                            if (Location == null) {
+                                showOptions();
+                            } else {
+                                ActionListener dateEnteredListener = new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        String Date = e.getActionCommand();
+                                        if (Date == null) {
+                                            showOptions();
+                                        } else {
+                                            ActionListener indEnteredListener = new ActionListener() {
+                                                @Override
+                                                public void actionPerformed(ActionEvent e) {
+                                                    String Industry = e.getActionCommand();
+                                                    if (Industry == null) {
+                                                        showOptions();
+                                                    } else {
+                                                        Main.db.addCompany(new Company(Name,Industry,Integer.parseInt(Date),Location));
+                                                        JOptionPane.showMessageDialog(null, "Company Added");
+                                                        showOptions();
+                                                    }
+                                                }
+                                            };
+                                            TextEntryWindow ind = new TextEntryWindow("Industry of Company", indEnteredListener);
+                                        }
+                                    }
+                                };
+                                IntEntryWindow date = new IntEntryWindow("Year of Foundation", dateEnteredListener);
+                            }
+                        }
+                    };
+                    TextEntryWindow loc = new TextEntryWindow("Location of the company", locEnteredListener);
+                }
+            }
+        };
 
-    private void toggleFavorite(Company company, JButton button, User user) {
-        if (user.getFavoriteCompanies().contains(company)) {
-            user.removeFavoriteCompany(company);
-            button.setText("Star"); // If it's a favorite, set text to "Unstar"
-        } else {
-            user.addFavoriteCompany(company);
-            button.setText("Unstar"); // If it's not a favorite, set text to "Star"
-        }
+        TextEntryWindow name = new TextEntryWindow("Name of the company", nameEnteredListener);
     }
 
     private void logOut(){

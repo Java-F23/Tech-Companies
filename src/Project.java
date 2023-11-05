@@ -1,13 +1,14 @@
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Project {
     private ArrayList<Integer> Assigned;
     private String name;
     private float Progress;
-    private float Revenue;
+    private BigDecimal Revenue;
     private String Description;
     private final int ID;
-    public Project(int ID,String name, String description, float Revenue){
+    public Project(int ID,String name, String description, BigDecimal Revenue){
         this.Assigned = new ArrayList<>();
         this.Progress = 0;
         this.Revenue = Revenue;
@@ -34,11 +35,11 @@ public class Project {
         Progress = progress;
     }
 
-    public float getRevenue() {
+    public BigDecimal getRevenue() {
         return Revenue;
     }
 
-    public void setRevenue(float revenue) {
+    public void setRevenue(BigDecimal revenue) {
         Revenue = revenue;
     }
 

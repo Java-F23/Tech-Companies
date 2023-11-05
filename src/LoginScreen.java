@@ -63,7 +63,7 @@ public class LoginScreen extends JFrame {
                 if (user != null) {
                     // User exists, login successful
                     if (user.getAdmin()){
-
+                        AdminBoard_UI adminBoardUi = new AdminBoard_UI(user);
                     }
                     else{
                         UserBoard_UI userBoardUi = new UserBoard_UI(user);
