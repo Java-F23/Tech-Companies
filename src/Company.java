@@ -661,13 +661,6 @@ public class Company {
         constraints.gridy = 7;
         panel.add(employeesLabel, constraints);
 
-        // Edit Button for Employees
-        JButton editEmployeesButton = new JButton("Edit");
-        //editEmployeesButton.addActionListener(e -> manageEmployees(panel, returnbutton));
-        constraints.gridx = 1;
-        panel.add(editEmployeesButton, constraints);
-        constraints.gridx = 0; // Reset column to 0
-
         // Current Projects Button
         JButton currentProjectsButton = new JButton("Current Projects");
         currentProjectsButton.addActionListener(e -> printCurrentProjectsAdmin(panel, returnbutton));
@@ -702,6 +695,14 @@ public class Company {
         JLabel revenueLabel = new JLabel("Revenue: " + getRevenue());
         constraints.gridy = 13;
         panel.add(revenueLabel, constraints);
+
+        // Edit Button for Revenue
+        JButton editRevenueButton = new JButton("Edit");
+        editRevenueButton.addActionListener(e -> editRevenue(panel, returnbutton));
+        constraints.gridx = 1;
+        panel.add(editRevenueButton, constraints);
+        constraints.gridx = 0; // Reset column to 0
+
         constraints.gridy = 14;
         panel.add(returnbutton, constraints);
 
@@ -792,6 +793,27 @@ public class Company {
         IntEntryWindow window = new IntEntryWindow("New Year of Foundation", textEnteredListener);
     }
 
+
+    private void editRevenue(JPanel panel, JButton returnbutton){
+        panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
+        ActionListener textEnteredListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = e.getActionCommand();
+                if (input == null) {
+                    printCompanyDetailsAdmin(panel, returnbutton);
+                } else {
+                    setRevenue(new BigDecimal(Integer.parseInt(input)));
+                    JOptionPane.showMessageDialog(null, "Revenue Changed");
+                    printCompanyDetailsAdmin(panel, returnbutton);
+                }
+            }
+        };
+
+        IntEntryWindow window = new IntEntryWindow("New Revenue", textEnteredListener);
+    }
 
     public void printServicesAdmin(JPanel panel, JButton returnbutton) {
         panel.removeAll();
@@ -958,7 +980,7 @@ public class Company {
                 JobListing J = temp.get(i);
                 JLabel jobLabel = new JLabel(J.getName());
                 constraints.gridy++;
-                panel.add(jobLabel);
+                panel.add(jobLabel,constraints);
 
                 JButton removeButton = new JButton("Remove");
                 removeButton.addActionListener(new ActionListener(){
@@ -973,9 +995,10 @@ public class Company {
                 panel.add(removeButton, constraints);
 
                 JButton manageButton = new JButton("Manage");
-                //manageButton.addActionListener(e -> manageJob(panel,returnbutton,J));
+                manageButton.addActionListener(e -> manageJob(panel,returnbutton,J));
                 constraints.gridx++;
                 panel.add(manageButton,constraints);
+                constraints.gridx--;
                 constraints.gridx--;
             }
         }
@@ -1026,20 +1049,6 @@ public class Company {
 
         panel.revalidate();
         panel.repaint();
-    }
-    public void manageEmployees(){
-        ArrayList<Integer> temp = this.getEmployees();
-        int i = 1;
-        if(temp.isEmpty()){
-            System.out.println("\t Employees: None");
-        }
-        else{
-            System.out.println("\t Employees ID: ");
-            for (int E : temp){
-                System.out.println("\t\t" + i + ") " + E);
-                i++;
-            }
-        }
     }
     public void printCurrentProjectsAdmin(JPanel panel, JButton returnbutton){
         panel.removeAll();
@@ -1114,6 +1123,7 @@ public class Company {
                 });
                 constraints.gridx++;
                 panel.add(manageButton,constraints);
+                constraints.gridx--;
                 constraints.gridx--;
             }
         }
@@ -1577,6 +1587,65 @@ public class Company {
         constraints.gridy++;
         panel.add(addButton, constraints);
 
+        JButton returnButton2 = new JButton("Return");
+        returnButton2.addActionListener(e -> printCompanyDetailsAdmin(panel, returnbutton));
+        constraints.gridy++;
+        panel.add(returnButton2, constraints);
+
+        panel.revalidate();
+        panel.repaint();
+    }
+    public void manageJob(JPanel panel, JButton returnbutton, JobListing j){
+        panel.removeAll();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.insets = new Insets(5,5,5,5);
+        constraints.gridy = 0;
+        constraints.gridx = 0;
+        ArrayList<User> applications = j.getApplicants();
+        if (applications.isEmpty()) {
+            JLabel label = new JLabel("Applications: None");
+            panel.add(label, constraints);
+        } else {
+            JLabel label = new JLabel("Applications:");
+            panel.add(label, constraints);
+
+            for (int i = 0; i < applications.size(); i++) {
+                User user = applications.get(i);
+                JLabel productLabel = new JLabel((i + 1) + ") " + user.getID() + " | " + user.getUsername());
+                constraints.gridy++;
+                panel.add(productLabel, constraints);
+
+                JButton acceptButton = new JButton("Accept");
+                acceptButton.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        addEmployee(user.getID());
+                        j.removeApplicant(user);
+                        JOptionPane.showMessageDialog(null, "User Accepted");
+                        manageJob(panel,returnbutton,j);
+                    }
+                });
+
+                JButton removeButton = new JButton("Reject");
+                removeButton.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        j.removeApplicant(user);
+                        JOptionPane.showMessageDialog(null, "User Rejected");
+                        manageJob(panel,returnbutton,j);
+                    }
+                });
+
+                constraints.gridx++;
+                panel.add(acceptButton, constraints);
+                constraints.gridx++;
+                panel.add(removeButton, constraints);
+                constraints.gridx--;
+                constraints.gridx--;
+            }
+        }
         JButton returnButton2 = new JButton("Return");
         returnButton2.addActionListener(e -> printCompanyDetailsAdmin(panel, returnbutton));
         constraints.gridy++;

@@ -8,6 +8,7 @@ public class AdminBoard_UI {
     private User user;
     private JFrame frame;
     private JPanel panel;
+    private JScrollPane scrollpanel;
     private JPanel showAllCompaniesPanel;
     private JPanel companyDetailsPanel;
 
@@ -15,20 +16,27 @@ public class AdminBoard_UI {
         this.user = user;
         frame = new JFrame("Admin Board");
         frame.setSize(500, 500);
-        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Create main panel
+        panel = new JPanel();
+
+        // Add panel to frame and display
+        scrollpanel = new JScrollPane(panel);
+        scrollpanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollpanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollpanel.setBounds(50, 30, 300, 50);
+        frame.add(scrollpanel);
         showOptions();
     }
 
     public void showOptions() {
-        // Create main panel
-        panel = new JPanel();
+        panel.removeAll();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.insets = new Insets(5,5,5,5);
         constraints.gridy = 0;
-
         // Create buttons for each option
         JButton showAllCompaniesButton = new JButton("Show all Companies");
         JButton filterCompaniesByNameButton = new JButton("Filter Companies by name");
@@ -57,10 +65,9 @@ public class AdminBoard_UI {
         panel.add(addCompaniesButton,constraints);
         constraints.gridy++;
         panel.add(logOutButton,constraints);
-
-        // Add panel to frame and display
-        frame.add(panel);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
     }
 
     public void showCompanies(ArrayList<Company> companies) {
@@ -85,15 +92,11 @@ public class AdminBoard_UI {
         JButton returnButton = new JButton("Return");
         returnButton.addActionListener(e -> returnToShowOptions());
         showAllCompaniesPanel.add(returnButton,constraints);
-        JScrollPane scrollPane = new JScrollPane(showAllCompaniesPanel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBounds(50, 30, 300, 50);
 
         // Clear the panel and add the showAllCompaniesPanel and returnButton
         panel.removeAll();
         panel.setLayout(new GridLayout());
-        panel.add(scrollPane);
+        panel.add(showAllCompaniesPanel);
 
         // Repaint the panel
         panel.revalidate();
