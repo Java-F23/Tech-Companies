@@ -1,13 +1,15 @@
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class Project {
+public class Project implements Serializable {
     private ArrayList<Integer> Assigned;
     private String name;
     private float Progress;
     private BigDecimal Revenue;
     private String Description;
     private final int ID;
+    //Initializes the above fields
     public Project(int ID,String name, String description, BigDecimal Revenue){
         this.Assigned = new ArrayList<>();
         this.Progress = 0;
@@ -16,6 +18,7 @@ public class Project {
         this.ID = ID;
         this.name = name;
     }
+    //Setters and getters for the fields
     public ArrayList<Integer> getAssigned() {
         return Assigned;
     }
@@ -61,25 +64,5 @@ public class Project {
 
     public void setName(String name) {
         this.name = name;
-    }
-    public void printProject(){
-        System.out.println("Project Name: " + this.getName());
-        System.out.println("Project Progress: " + this.getProgress());
-        System.out.println("Project Revenue: " + this.getRevenue());
-        System.out.println("Project Description: " + this.getDescription());
-        printAssigned();
-    }
-    public void printAssigned(){
-        if (this.getAssigned().isEmpty()){
-            System.out.println("Project Assigned Employees: None");
-        }
-        else{
-            int i =1;
-            System.out.println("Project Assigned Employees: ");
-            for (int U : Assigned){
-                System.out.println(i + ") " + U);
-                i++;
-            }
-        }
     }
 }

@@ -1,10 +1,12 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class JobListing {
+public class JobListing implements Serializable {
     private String Name;
     private String jobDescription;
     private ArrayList<User> applicants;
 
+    //Initializes the above fields
     public JobListing(String Name, String jobDescription) {
         this.Name = Name;
         this.jobDescription = jobDescription;
@@ -39,16 +41,5 @@ public class JobListing {
 
     public void setName(String name) {
         Name = name;
-    }
-    public void printApplicants(){
-        int i = 1;
-        if(this.getApplicants().isEmpty()){
-            System.out.println("No applicants");
-            return;
-        }
-        for(User a : this.getApplicants()){
-            System.out.println(i + ") " + a.getUsername() + "| ID: " + a.getID());
-            i++;
-        }
     }
 }

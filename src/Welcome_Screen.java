@@ -6,10 +6,10 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 public class Welcome_Screen {
-    private Database db;
-    private JFrame frame;
-    public Welcome_Screen(Database database){
-        db = database;
+    private View view;
+    JFrame frame;
+    public Welcome_Screen(View v){
+        view = v;
     }
     public void initiate(){
         frame = new JFrame("Welcome Screen");
@@ -27,18 +27,26 @@ public class Welcome_Screen {
         frame.add(label, gbc);
 
         // Create a new JButton
-        JButton button = new JButton("Start Application");
+        JButton button = new JButton("Login");
         gbc.gridx = 0;
         gbc.gridy = 1;
         frame.add(button, gbc);
 
+        JButton button2 = new JButton("Sign Up");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        frame.add(button2, gbc);
+
         // Attach an ActionListener to the JButton
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                LoginScreen loginScreen = new LoginScreen(db);
-                loginScreen.setVisible(true);
-                // Hide welcome screen
-                frame.setVisible(false);
+                view.Login();
+                frame.dispose();
+            }
+        });
+        button2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                view.Register();
                 frame.dispose();
             }
         });

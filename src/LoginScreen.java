@@ -9,21 +9,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class LoginScreen extends JFrame {
-    private Database database;
+    private View view;
     private JLabel userLabel;
     private JLabel passwordLabel;
     private JTextField userTextField;
     private JPasswordField passwordField;
     private JButton loginButton;
 
-    public LoginScreen(Database db) {
+    public LoginScreen(View v) {
         // Create components
         userLabel = new JLabel("Username:");
         passwordLabel = new JLabel("Password:");
         userTextField = new JTextField(15);
         passwordField = new JPasswordField(15);
         loginButton = new JButton("Login");
-        database = db;
+        view = v;
 
         // Set layout manager
         setLayout(new GridBagLayout());
@@ -59,14 +59,15 @@ public class LoginScreen extends JFrame {
                 String password = new String(passwordField.getPassword());
 
                 // Check if user exists in database
-                User user = database.getUser(username, password);
+                User user = view.getUser(username, password);
                 if (user != null) {
                     // User exists, login successful
+                    view.setUser(user);
                     if (user.getAdmin()){
-                        AdminBoard_UI adminBoardUi = new AdminBoard_UI(user);
+                        view.adminBoardInitiate();
                     }
                     else{
-                        UserBoard_UI userBoardUi = new UserBoard_UI(user);
+                        view.userBoardInitiate();
                     }
                     dispose();
                 } else {

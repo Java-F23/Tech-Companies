@@ -1,14 +1,11 @@
-public class Resource {
-    private String name;
-    private String Description;
-    private String link;
+import java.io.Serializable;
 
-    public Resource(String name, String description, String link) {
-        this.name = name;
-        this.Description = description;
-        this.link = link;
-    }
+public abstract class Resource implements Serializable {
+    protected String name;
+    protected String Description;
+    protected String link;
 
+    //Setters and getters for the above fields
     public String getName() {
         return name;
     }
@@ -31,10 +28,5 @@ public class Resource {
 
     public void setLink(String link) {
         this.link = link;
-    }
-    public void printResource(){
-        System.out.println("Resource Name: " + this.getName());
-        System.out.println("Resource Description: " + this.getDescription());
-        System.out.println("Resource URL: " + this.getLink());
     }
 }
